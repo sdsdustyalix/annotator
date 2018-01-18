@@ -1,0 +1,60 @@
+tempus
+
+Version 1.0
+
+DESCRIPTION 
+
+Annotation tool.  Accepts VCF input file and outputs a tab-delimited annotated file.
+
+Outputs the following columns:
+
+1) Chromosome
+2) Position (Start position if >1 base)
+3) Reference allele
+4) Alternate allele
+5) Depth (from VCF DP format field)
+6) Reads supporting Alternate allele (from VCF DPR format field)
+7) Percent Reads supporting Alternate allele vs. Reads supporting the Reference allele (from VCF)
+8) Allele Frequency (from EXAC)
+9) Variant type (from VCF TYPE info field)
+10) Variant Type/Consequence (from EXAC; if multiple types, most deleterious type selected based on Ensembl estimate of severity)
+
+Notes:
+
+1) Tool assumes VCF contains two samples and only processes the second sample.
+2) Tool identifies VCF FORMAT tag/id order from first variant and assumes all variants have same ordering (i.e, all variants have the following FORMAT field  GT:GQ:DP:DPR:RO:QR:AO:QA).
+3) If no data available, annotation output field will contain '-'.
+
+
+INSTALLATION
+
+The easiest way to use "tempus" is to use the precompiled binary (created using gcc 4.4.7 on CentOS 6.8) in ./dist/
+
+If desired, "tempus" may be created from source code by running the following from the command line:
+
+make
+
+
+USAGE
+
+Usage: tempus -i <VCF-formatted input file> -o <Annotated output file> [optional parameters]
+
+Required Parameters:
+	-i 	VCF-formatted input file
+	-o 	Annotated output file
+
+Optional Parameters:
+	-s 	SO terms file [SO_terms_sorted_by_ensembl_estimated_severity.txt]
+
+Other Parameters:
+	-h 	Print help
+	-v 	Print version
+
+
+
+Example using Challenge_data.vcf and precompiled tempus:
+
+./dist/tempus -i ./test_data/Challenge_data.vcf -o ./Challenge_data_annotation.txt
+
+
+
